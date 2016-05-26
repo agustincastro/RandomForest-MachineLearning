@@ -1,0 +1,8 @@
+numpy==1.11.0
+pbr==1.9.1
+six==1.10.0
+stevedore==1.13.0
+virtualenv==15.0.1
+virtualenv-clone==0.2.6
+virtualenvwrapper==4.7.1
+wsgiref==0.1.2
