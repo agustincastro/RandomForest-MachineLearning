@@ -1,14 +1,7 @@
 # Example of Naive Bayes implemented from Scratch in Python
-import csv
 import random
 import math
 
-def loadCsv(filename):
-	lines = csv.reader(open(filename, "rb"))
-	dataset = list(lines)
-	for i in range(len(dataset)):
-		dataset[i] = [float(x) for x in dataset[i]]
-	return dataset
 
 def splitDataset(dataset, splitRatio):
 	trainSize = int(len(dataset) * splitRatio)
@@ -84,19 +77,3 @@ def getAccuracy(testSet, predictions):
 		if testSet[i][-1] == predictions[i]:
 			correct += 1
 	return (correct/float(len(testSet))) * 100.0
-
-
-def main():
-	filename = 'pima-indians-diabetes.data.csv'
-	splitRatio = 0.67
-	dataset = loadCsv(filename)
-	trainingSet, testSet = splitDataset(dataset, splitRatio)
-	print('Split {0} rows into train={1} and test={2} rows').format(len(dataset), len(trainingSet), len(testSet))
-	# prepare model
-	summaries = summarizeByClass(trainingSet)
-	# test model
-	predictions = getPredictions(summaries, testSet)
-	accuracy = getAccuracy(testSet, predictions)
-	print('Accuracy: {0}%').format(accuracy)
-
-main()
