@@ -1,6 +1,14 @@
-# Example of Naive Bayes implemented from Scratch in Python
 import math
 
+
+#  -------    Naive Bayes   ------------
+
+def NaiveBayes(summaries, testSet):
+	predictions = []
+	for i in range(len(testSet)):
+		result = predict(summaries, testSet[i])
+		predictions.append(result)
+	return predictions
 
 def calculateProbability(x, mean, stdev):
 	exponent = math.exp(-(math.pow(x-mean,2)/(2*math.pow(stdev,2))))
@@ -25,16 +33,26 @@ def predict(summaries, inputVector):
 			bestLabel = classValue
 	return bestLabel
 
-def getPredictions(summaries, testSet):
-	predictions = []
-	for i in range(len(testSet)):
-		result = predict(summaries, testSet[i])
-		predictions.append(result)
-	return predictions
-
 def getAccuracy(testSet, predictions):
 	correct = 0
 	for i in range(len(testSet)):
 		if testSet[i][-1] == predictions[i]:
 			correct += 1
 	return (correct/float(len(testSet))) * 100.0
+
+#----------------------------------------
+
+#  -------  Basic Linear Regression -----
+
+def basicLinearRegression(x, y):
+	length = len(x)
+	sumX = sum(x)
+	sumY = sum(y)
+	sumXSquared = sum(map(lambda a: a * a, x))
+	sumOfProducts = sum([x[i] * y[i] for i in range(length)])
+
+	a = (sumOfProducts - (sumX * sumY) / length) / (sumXSquared - ((sumX ** 2) / length))
+	b = (sumY - a * sumX) / length
+	return a, b
+
+#  --------------------------------------

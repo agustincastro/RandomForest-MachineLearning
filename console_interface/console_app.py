@@ -15,7 +15,7 @@ def main():
     # prepare model
     summaries = utils.summarizeByClass(trainingSet)
     # test model
-    predictions = supervised.getPredictions(summaries, testSet)
+    predictions = supervised.NaiveBayes(summaries, testSet)
     accuracy = supervised.getAccuracy(testSet, predictions)
     print('Accuracy: {0}%').format(accuracy)
 
