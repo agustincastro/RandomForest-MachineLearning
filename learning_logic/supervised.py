@@ -1,6 +1,5 @@
 import math
 
-
 #  -------    Naive Bayes   ------------
 
 def NaiveBayes(summaries, testSet):
@@ -55,4 +54,28 @@ def basicLinearRegression(x, y):
 	b = (sumY - a * sumX) / length
 	return a, b
 
-#  --------------------------------------
+#----------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
