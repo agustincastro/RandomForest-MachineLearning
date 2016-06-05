@@ -43,7 +43,4 @@ def bayesMain():
 
 
 
-
-
-
 decisionTreeMain()

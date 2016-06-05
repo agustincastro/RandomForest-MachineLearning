@@ -1,3 +1,5 @@
+from math import log
+
 
 #Example of data structure
 my_data=[['slashdot','USA','yes',18,'None'],
@@ -48,27 +50,23 @@ def divideSet(rows,column,value):
 # Create counts of possible results (last column of each row is the result)
 def uniqueCounts(rows):
     results={}
-    for row in rows:
-        # The result is the last column
+    for row in rows: # The result is the last column
         r=row[len(row)-1]
         if r not in results: results[r]=0
         results[r]+=1
     return results
 
 
-
 # Entropy is the sum of p(x)log(p(x)) across all the different possible results
 def entropy(rows):
-    from math import log
     log2=lambda x:log(x)/log(2)
     results=uniqueCounts(rows)
     # Now calculate the entropy
-    ent=0.0
-    for r in results.keys():
-        # current probability of class
-        p=float(results[r])/len(rows)
-        ent=ent-p*log2(p)
-    return ent
+    entropy=0.0
+    for row in results.keys():
+        probability=float(results[row])/len(rows) # current probability of class
+        entropy=entropy-probability*log2(probability)
+    return entropy
 
 
 def buildTree(rows, scorefun=entropy):
