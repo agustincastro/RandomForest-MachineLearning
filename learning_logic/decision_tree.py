@@ -1,25 +1,28 @@
 from math import log
 
-
 #Example of data structure
 my_data=[['slashdot','USA','yes',18,'None'],
         ['google','France','yes',23,'Premium'],
-        ['reddit','USA','yes',24,'Basic'],
+        ['digg','USA','yes',24,'Basic'],
         ['kiwitobes','France','yes',23,'Basic'],
         ['google','UK','no',21,'Premium'],
         ['(direct)','New Zealand','no',12,'None'],
         ['(direct)','UK','no',21,'Basic'],
         ['google','USA','no',24,'Premium'],
         ['slashdot','France','yes',19,'None'],
-        ['reddit','USA','no',18,'None'],
+        ['digg','USA','no',18,'None'],
         ['google','UK','no',18,'None'],
         ['kiwitobes','UK','no',19,'None'],
-        ['reddit','New Zealand','yes',12,'Basic'],
+        ['digg','New Zealand','yes',12,'Basic'],
         ['slashdot','UK','no',21,'None'],
         ['google','UK','yes',18,'Basic'],
         ['kiwitobes','France','yes',19,'Basic']]
 
 
+# One of the more popular methods for consructing trees, CART (Classification And Regression Trees),
+# was developed by Leo Breiman https://www.stat.berkeley.edu/~breiman/papers.html. CART is a recursive
+# partitioning method that builds classification and regression trees for predicting continuous and
+# categorical variables.
 class DecisionNode:
     def __init__(self,column=-1,value=None,results=None,trueNodes=None,falseNodes=None):
         self.column=column # column index of criteria being tested
@@ -48,19 +51,24 @@ def divideSet(rows,column,value):
 
 
 # Create counts of possible results (last column of each row is the result)
-def uniqueCounts(rows):
+def uniqueCounts(rows, classPosition = 0):
     results={}
     for row in rows: # The result is the last column
-        r=row[len(row)-1]
-        if r not in results: results[r]=0
-        results[r]+=1
+        if classPosition == 0: classPosition = len(row)
+        lastRow=row[classPosition - 1]
+        if lastRow not in results: results[lastRow]=0
+        results[lastRow]+=1
     return results
 
 
-# Entropy is the sum of p(x)log(p(x)) across all the different possible results
-def entropy(rows):
+# Information entropy tells how much information there is in an event. In general, the more uncertain or
+# random the event is, the more information it will contain.
+# The lower the entropy value is, the fewer questions we need to ask to predict certain outcome
+
+# classPosition is the location of the class in the dataset(number of row)
+def entropy(rows, classPosition = 0):
     log2=lambda x:log(x)/log(2)
-    results=uniqueCounts(rows)
+    results=uniqueCounts(rows, classPosition)
     # Now calculate the entropy
     entropy=0.0
     for row in results.keys():
@@ -104,17 +112,33 @@ def buildTree(rows, scorefun=entropy):
 
 
 
-def printtree(tree,indent=''):
+def printTree(tree,indent=''):
     # Is this a leaf node?
     if tree.results!=None:
         print str(tree.results)
     else:
         # Print the criteria
-        print 'Column ' + str(tree.col)+' : '+str(tree.value)+'? '
+        print 'Column ' + str(tree.column)+' : '+str(tree.value)+'? '
 
         # Print the branches
         print indent+'True->',
-        printtree(tree.tb,indent+'  ')
+        printTree(tree.trueNodes,indent+'  ')
         print indent+'False->',
-        printtree(tree.fb,indent+'  ')
+        printTree(tree.falseNodes,indent+'  ')
 
+
+def printDataset(rows):
+    for row in rows:
+        print row
+
+
+# Moves one column in the dataset to the last of the dataset
+def postponeColumn(rows, columToPostpone):
+    for row in rows:
+        row.append(row[columToPostpone])
+        del row[columToPostpone]
+
+
+# When building the decision tree we want to first move the column we want to classify to the last
+postponeColumn(my_data, 1)
+printTree(buildTree(my_data))

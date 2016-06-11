@@ -4,6 +4,20 @@ import pkg_resources, os
 import csv
 
 
+def printtree(tree,indent=''):
+    # Is this a leaf node?
+    if tree.results!=None:
+        print str(tree.results)
+    else:
+        # Print the criteria
+        print 'Column ' + str(tree.column)+' : '+str(tree.value)+'? '
+
+        # Print the branches
+        print indent+'True->',
+        printtree(tree.trueNodes,indent+'  ')
+        print indent+'False->',
+        printtree(tree.falseNodes,indent+'  ')
+
 
 def decisionTreeMain():
     resource_package = 'resources'
@@ -13,10 +27,13 @@ def decisionTreeMain():
 
     lines = csv.reader(open(filePath, "rb"))
     dataset = list(lines)
+    headers = dataset[0]
+    del dataset[0] # removes headers from dataset
 
-    datasetEntropy = decision_tree.entropy(dataset)
-    print('Entropy in {0} dataset: {1}').format(filename, str(datasetEntropy))
+    #datasetEntropy = decision_tree.entropy(my_data) # 2.40
+    #print('Entropy in {0} dataset: {1}').format(filename, str(datasetEntropy))
 
+    decision_tree.printTree(decision_tree.buildTree(decision_tree.my_data))
 
 
 def bayesMain():
@@ -44,3 +61,6 @@ def bayesMain():
 
 
 decisionTreeMain()
+
+
+
