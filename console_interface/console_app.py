@@ -57,7 +57,8 @@ def decisionTreeMain():
     #datasetEntropy = decision_tree.entropy(my_data) # 2.40
     #print('Entropy in {0} dataset: {1}').format(filename, str(datasetEntropy))
     decision_tree.postponeColumn(dataset, 1)
-    decision_tree.printTree(decision_tree.buildTree(dataset))
+    tree = decision_tree.buildTreeWithHeigth(dataset, maxHeigth=1)
+    printtree(tree)
 
 
 def bayesMain():

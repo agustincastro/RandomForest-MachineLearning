@@ -76,7 +76,8 @@ def entropy(rows, classPosition = 0):
         entropy=entropy-probability*log2(probability)
     return entropy
 
-
+# Builds a decision tree, this algorithm stops buiding the tree when it analises
+# the complete dataset
 def buildTree(rows, scorefun=entropy):
     if len(rows) == 0: return DecisionNode()
     current_score = scorefun(rows)
@@ -105,6 +106,47 @@ def buildTree(rows, scorefun=entropy):
     if best_gain > 0:
         trueBranch = buildTree(best_sets[0])
         falseBranch = buildTree(best_sets[1])
+        return DecisionNode(column=best_criteria[0], value=best_criteria[1],
+                trueNodes=trueBranch, falseNodes=falseBranch)
+    else:
+        return DecisionNode(results=uniqueCounts(rows))
+
+
+# Builds a decision tree based on a dataset and stops building when the heigth of the tree
+# reaches a certain maximum
+def buildTreeWithHeigth(rows, scorefun=entropy, currentHeigth=0, maxHeigth=100):
+    if len(rows) == 0: return DecisionNode()
+    current_score = scorefun(rows)
+
+    best_gain = 0.0
+    best_criteria = None
+    best_sets = None
+
+    column_count = len(rows[0]) - 1	# last column is result
+    for col in range(0, column_count):
+        # find different values in this column
+        column_values = set([row[col] for row in rows])
+
+        # for each possible value, try to divide on that value
+        for value in column_values:
+            set1, set2 = divideSet(rows, col, value)
+
+            # Information gain
+            p = float(len(set1)) / len(rows)
+            gain = current_score - p*scorefun(set1) - (1-p)*scorefun(set2)
+            if gain > best_gain and len(set1) > 0 and len(set2) > 0:
+                best_gain = gain
+                best_criteria = (col, value)
+                best_sets = (set1, set2)
+
+    if best_gain > 0:
+
+        #Max heigth reached, stops building tree
+        if currentHeigth >= maxHeigth: return DecisionNode(results=uniqueCounts(rows))
+
+        currentHeigth += 1
+        trueBranch = buildTreeWithHeigth(best_sets[0], currentHeigth=currentHeigth, maxHeigth=maxHeigth)
+        falseBranch = buildTreeWithHeigth(best_sets[1], currentHeigth=currentHeigth, maxHeigth=maxHeigth)
         return DecisionNode(column=best_criteria[0], value=best_criteria[1],
                 trueNodes=trueBranch, falseNodes=falseBranch)
     else:
