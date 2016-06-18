@@ -56,9 +56,15 @@ def decisionTreeMain():
     printDataSet(dataset)
     #datasetEntropy = decision_tree.entropy(my_data) # 2.40
     #print('Entropy in {0} dataset: {1}').format(filename, str(datasetEntropy))
-    decision_tree.postponeColumn(dataset, 1)
-    tree = decision_tree.buildTreeWithMaxElementsInNode(dataset, minNodes=10)
+    decision_tree.postponeColumn(dataset, 2) # Shifts 'Survive' column to the last
+    rowToClassify = dataset[1]
+    del dataset[1]
+
+    tree = decision_tree.buildTreeWithHeigth(dataset, maxHeigth=5)
     printtree(tree)
+    print "Decidimos la siguiente fila:"
+    print rowToClassify
+    print "Resultado -> " + str(decision_tree.classifyInTree(tree, rowToClassify))
 
 
 def bayesMain():

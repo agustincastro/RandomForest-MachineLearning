@@ -26,8 +26,8 @@ my_data=[['slashdot','USA','yes',18,'None'],
 class DecisionNode:
     def __init__(self,column=-1,value=None,results=None,trueNodes=None,falseNodes=None):
         self.column=column # column index of criteria being tested
-        self.value=value # vlaue necessary to get a true result
-        self.results=results # dict of results for a branch, None for everything except endpoints
+        self.value=value # value necessary to get a true result
+        self.results=results # dict of results for a branch, None for everything except leaves
         self.trueNodes=trueNodes # true decision nodes
         self.falseNodes=falseNodes # false decision nodes
 
@@ -192,6 +192,28 @@ def buildTreeWithMaxElementsInNode(rows, scorefun=entropy, minNodes=100):
                 trueNodes=trueBranch, falseNodes=falseBranch)
     else:
         return DecisionNode(results=uniqueCounts(rows))
+
+
+def classifyInTree(tree, row):
+    if tree.results: # El diccionario de resultados esta vacio, me encuentro en una hoja, devuelvo la clase
+        print tree.results.keys()
+        if len(tree.results.keys()) > 1:
+            return max(tree.results, key=tree.results.get)
+        return tree.results.keys()[0]
+    valueEvaluatedInNode = row[tree.column]
+    if tree.value == valueEvaluatedInNode:
+        return classifyInTree(tree.trueNodes, row)
+    else:
+        return classifyInTree(tree.falseNodes, row)
+
+
+#class DecisionNode:
+#    def __init__(self,column=-1,value=None,results=None,trueNodes=None,falseNodes=None):
+#        self.column=column # column index of criteria being tested
+#        self.value=value # vlaue necessary to get a true result
+#        self.results=results # dict of results for a branch, None for everything except endpoints
+#        self.trueNodes=trueNodes # true decision nodes
+#        self.falseNodes=falseNodes # false decision nodes
 
 
 
