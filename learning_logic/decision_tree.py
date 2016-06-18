@@ -153,6 +153,47 @@ def buildTreeWithHeigth(rows, scorefun=entropy, currentHeigth=0, maxHeigth=100):
         return DecisionNode(results=uniqueCounts(rows))
 
 
+# Builds a decision tree based on a dataset and stops building when the number of items within a node
+# surpases a certain minimum
+def buildTreeWithMaxElementsInNode(rows, scorefun=entropy, minNodes=100):
+    if len(rows) == 0: return DecisionNode()
+    current_score = scorefun(rows)
+
+    best_gain = 0.0
+    best_criteria = None
+    best_sets = None
+
+    column_count = len(rows[0]) - 1	# last column is result
+    for col in range(0, column_count):
+        # find different values in this column
+        column_values = set([row[col] for row in rows])
+
+        # for each possible value, try to divide on that value
+        for value in column_values:
+            set1, set2 = divideSet(rows, col, value)
+
+            # Information gain
+            p = float(len(set1)) / len(rows)
+            gain = current_score - p*scorefun(set1) - (1-p)*scorefun(set2)
+            if gain > best_gain and len(set1) > 0 and len(set2) > 0:
+                best_gain = gain
+                best_criteria = (col, value)
+                best_sets = (set1, set2)
+
+    if best_gain > 0:
+
+        #Max node count reached, stops building tree
+        if minNodes >= len(rows): return None
+
+        trueBranch = buildTreeWithMaxElementsInNode(best_sets[0], minNodes=minNodes)
+        falseBranch = buildTreeWithMaxElementsInNode(best_sets[1], minNodes=minNodes)
+        if trueBranch == None or falseBranch == None: return DecisionNode(results=uniqueCounts(rows))
+        return DecisionNode(column=best_criteria[0], value=best_criteria[1],
+                trueNodes=trueBranch, falseNodes=falseBranch)
+    else:
+        return DecisionNode(results=uniqueCounts(rows))
+
+
 
 def printTree(tree,indent=''):
     # Is this a leaf node?
