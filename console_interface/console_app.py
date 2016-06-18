@@ -19,6 +19,29 @@ def printtree(tree,indent=''):
         printtree(tree.falseNodes,indent+'  ')
 
 
+# Removes every row that has blank data in order not to vias the algorithm
+def normalizeDataset(dataSet):
+    rowLength = len(dataSet[0])
+    dataSetLength = len(dataSet)
+    lineIndex = 0
+    for lineNumber in range(0, dataSetLength):
+        line = dataSet[lineIndex]
+        deletedLine = False
+        for col in range(0 , rowLength):
+            if(line[col]==''):
+                del dataSet[lineIndex]
+                deletedLine = True
+            if deletedLine: break
+        if not deletedLine: lineIndex += 1
+    return dataSet
+
+
+def printDataSet(dataSet):
+    print "DATASET:"
+    print ''
+    for line in dataSet:
+        print line
+
 def decisionTreeMain():
     resource_package = 'resources'
     filename = 'titanic.train.csv'
@@ -29,11 +52,12 @@ def decisionTreeMain():
     dataset = list(lines)
     headers = dataset[0]
     del dataset[0] # removes headers from dataset
-
+    dataset = normalizeDataset(dataset)
+    printDataSet(dataset)
     #datasetEntropy = decision_tree.entropy(my_data) # 2.40
     #print('Entropy in {0} dataset: {1}').format(filename, str(datasetEntropy))
-
-    decision_tree.printTree(decision_tree.buildTree(decision_tree.my_data))
+    decision_tree.postponeColumn(dataset, 1)
+    decision_tree.printTree(decision_tree.buildTree(dataset))
 
 
 def bayesMain():

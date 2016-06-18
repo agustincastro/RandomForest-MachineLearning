@@ -134,11 +134,12 @@ def printDataset(rows):
 
 # Moves one column in the dataset to the last of the dataset
 def postponeColumn(rows, columToPostpone):
+    columToPostpone = columToPostpone - 1
     for row in rows:
         row.append(row[columToPostpone])
         del row[columToPostpone]
 
 
 # When building the decision tree we want to first move the column we want to classify to the last
-postponeColumn(my_data, 1)
-printTree(buildTree(my_data))
+#postponeColumn(my_data, 1)
+#printTree(buildTree(my_data))
