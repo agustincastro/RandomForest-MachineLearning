@@ -38,7 +38,7 @@ def normalizeDataset(dataSet):
 def removeColumn(dataSet, columnIndex):
     for row in dataSet:
         del row[columnIndex]
-        
+
 
 
 def printDataSet(dataSet):
