@@ -35,6 +35,11 @@ def normalizeDataset(dataSet):
         if not deletedLine: lineIndex += 1
     return dataSet
 
+def removeColumn(dataSet, columnIndex):
+    for row in dataSet:
+        del row[columnIndex]
+        
+
 
 def printDataSet(dataSet):
     print "DATASET:"
