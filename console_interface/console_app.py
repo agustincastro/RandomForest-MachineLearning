@@ -35,6 +35,7 @@ def normalizeDataset(dataSet):
         if not deletedLine: lineIndex += 1
     return dataSet
 
+# Removes entire column from the dataset by index, columnIndex starts at 0
 def removeColumn(dataSet, columnIndex):
     for row in dataSet:
         del row[columnIndex]
@@ -59,6 +60,10 @@ def decisionTreeMain():
     del dataset[0] # removes headers from dataset
     dataset = normalizeDataset(dataset)
     printDataSet(dataset)
+    print('-------------')
+    removeColumn(dataset, 3)
+    printDataSet(dataset)
+
     #datasetEntropy = decision_tree.entropy(my_data) # 2.40
     #print('Entropy in {0} dataset: {1}').format(filename, str(datasetEntropy))
     decision_tree.postponeColumn(dataset, 2) # Shifts 'Survive' column to the last
