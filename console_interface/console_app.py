@@ -41,12 +41,27 @@ def removeColumn(dataSet, columnIndex):
         del row[columnIndex]
 
 
-
 def printDataSet(dataSet):
     print "DATASET:"
     print ''
     for line in dataSet:
         print line
+
+# Get average value of a column, columnIndex starts at 0
+def average(dataSet, columnIndex):
+    sum = 0
+    for row in dataSet:
+        sum += row[columnIndex]
+    return sum / len(dataSet)
+
+# Get max value of a column, columnIndex starts at 0
+def maxValue(dataset, columnIndex):
+    return max([row[columnIndex] for row in dataset])
+
+# Get min value of a column, columnIndex starts at 0
+def minValue(dataset, columnIndex):
+    return min([row[columnIndex] for row in dataset])
+
 
 def decisionTreeMain():
     resource_package = 'resources'
