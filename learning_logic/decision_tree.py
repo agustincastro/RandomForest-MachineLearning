@@ -43,7 +43,6 @@ def divideSet(rows,column,value):
     # for nominal values
     else:
         split_function=lambda row:row[column]==value
-
    # Divide the rows into two sets and return them
     set1=[row for row in rows if split_function(row)] # if split_function(row)
     set2=[row for row in rows if not split_function(row)]
@@ -207,17 +206,7 @@ def classifyInTree(tree, row):
         return classifyInTree(tree.falseNodes, row)
 
 
-#class DecisionNode:
-#    def __init__(self,column=-1,value=None,results=None,trueNodes=None,falseNodes=None):
-#        self.column=column # column index of criteria being tested
-#        self.value=value # vlaue necessary to get a true result
-#        self.results=results # dict of results for a branch, None for everything except endpoints
-#        self.trueNodes=trueNodes # true decision nodes
-#        self.falseNodes=falseNodes # false decision nodes
-
-
-
-def printTree(tree,indent=''):
+def printtree(tree,indent=''):
     # Is this a leaf node?
     if tree.results!=None:
         print str(tree.results)
@@ -227,24 +216,12 @@ def printTree(tree,indent=''):
 
         # Print the branches
         print indent+'True->',
-        printTree(tree.trueNodes,indent+'  ')
+        printtree(tree.trueNodes,indent+'  ')
         print indent+'False->',
-        printTree(tree.falseNodes,indent+'  ')
+        printtree(tree.falseNodes,indent+'  ')
 
-
-def printDataset(rows):
-    for row in rows:
-        print row
-
-
-# Moves one column in the dataset to the last of the dataset
-def postponeColumn(rows, columToPostpone):
-    columToPostpone = columToPostpone - 1
-    for row in rows:
-        row.append(row[columToPostpone])
-        del row[columToPostpone]
 
 
 # When building the decision tree we want to first move the column we want to classify to the last
-#postponeColumn(my_data, 1)
+#dataset.postponeColumn(my_data, 1)
 #printTree(buildTree(my_data))
