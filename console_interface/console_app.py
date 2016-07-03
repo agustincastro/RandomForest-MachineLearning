@@ -1,7 +1,9 @@
 from utils import utils
 from learning_logic import supervised, decision_tree
+import multiprocessing
 import pkg_resources, os
 import csv
+import random
 
 
 def printtree(tree,indent=''):
@@ -62,6 +64,16 @@ def maxValue(dataset, columnIndex):
 def minValue(dataset, columnIndex):
     return min([row[columnIndex] for row in dataset])
 
+# Splits a dataset randomly into a number of datasets
+def randomSplit(dataSet, subsetQuantity):
+    startingIndex = 0
+    dataSets = []
+    subsetLength = int(round(len(dataSet) / subsetQuantity))
+    random.shuffle(dataSet)
+    for i in range(0, subsetQuantity):
+        dataSets.append( dataSet[startingIndex : startingIndex+subsetLength] )
+        startingIndex += subsetLength
+    return dataSets
 
 def decisionTreeMain():
     resource_package = 'resources'
@@ -75,9 +87,13 @@ def decisionTreeMain():
     del dataset[0] # removes headers from dataset
     dataset = normalizeDataset(dataset)
     printDataSet(dataset)
+    del dataset[0] # test
     print('-------------')
-    removeColumn(dataset, 3)
-    printDataSet(dataset)
+    print('***** Splits randomly subsets in order to create a random forest ****')
+    subsets = randomSplit(dataset, 3)
+    printDataSet(subsets)
+    #removeColumn(dataset, 3)
+    #printDataSet(dataset)
 
     #datasetEntropy = decision_tree.entropy(my_data) # 2.40
     #print('Entropy in {0} dataset: {1}').format(filename, str(datasetEntropy))
@@ -92,27 +108,6 @@ def decisionTreeMain():
     print "Resultado -> " + str(decision_tree.classifyInTree(tree, rowToClassify))
 
 
-def bayesMain():
-    resource_package = 'resources'
-    resource_path = os.path.join('training_data', 'titanic.train.csv')
-    filename = pkg_resources.resource_filename(resource_package, resource_path) # Gets path of file from another package
-
-    data = pkg_resources.resource_string(resource_package, resource_path) # Gets data of file from another package
-
-    splitRatio = 0.67
-    # Loads the dataset from a CSV file
-    dataset = utils.loadCsv(filename)
-
-    # Processes dataset into a training set and test set
-    trainingSet, testSet = utils.splitDataset(dataset, splitRatio)
-    print('Split {0} rows into train={1} and test={2} rows').format(len(dataset), len(trainingSet), len(testSet))
-
-    # prepare model
-    summaries = utils.summarizeByClass(trainingSet)
-    # test model
-    predictions = supervised.NaiveBayes(summaries, testSet)
-    accuracy = supervised.getAccuracy(testSet, predictions)
-    print('Accuracy: {0}%').format(accuracy)
 
 
 
