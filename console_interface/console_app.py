@@ -19,7 +19,7 @@ def printtree(tree,indent=''):
         printtree(tree.falseNodes,indent+'  ')
 
 
-# Removes every row that has blank data in order not to vias the algorithm
+# Removes every row that has blank data in order not to bias the algorithm
 def normalizeDataset(dataSet):
     rowLength = len(dataSet[0])
     dataSetLength = len(dataSet)
@@ -117,6 +117,3 @@ def bayesMain():
 
 
 decisionTreeMain()
-
-
-
