@@ -152,8 +152,8 @@ def buildTreeWithHeigth(rows, scorefun=entropy, currentHeigth=0, maxHeigth=100):
         return DecisionNode(results=uniqueCounts(rows))
 
 
-# Builds a decision tree based on a dataset and stops building when the number of items within a node
-# surpases a certain minimum
+# Builds a decision tree based on a dataset and stops building when the number of items within a leaf surpases a certain minimum. For a greater
+# minNode, the tree is created faster beacuse is groups more items in a leaf
 def buildTreeWithMaxElementsInNode(rows, scorefun=entropy, minNodes=100):
     if len(rows) == 0: return DecisionNode()
     current_score = scorefun(rows)
