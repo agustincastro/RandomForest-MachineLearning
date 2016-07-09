@@ -60,7 +60,7 @@ def createDecisionTreesPool(dataSets, buildTreeFunction = decision_tree.buildTre
 
 # Classifies a random forest and returns a list of tentative classifications for a test
 def classifyForest(decisionTrees, test):
-    results = [decision_tree.classifyInTree(tree, test) for tree in decision_tree]
+    results = [decision_tree.classifyInTree(tree, test) for tree in decisionTrees]
     return results
 
 
@@ -82,3 +82,24 @@ def classifyForestMultiprocessing(decisionTrees, test):
     print("--- %s seconds to classify trees concurrently(multiprocessing)---" % (time.time() - start_time))
     # Get process results from the output queue
     return [output.get() for p in processes]
+
+
+# Returns the most repeated element in the result set provided by the classification of the random forest
+def getFinalResult(classifications):
+    return max(set(classifications), key=classifications.count)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

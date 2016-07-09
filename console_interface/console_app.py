@@ -28,25 +28,29 @@ def decisionTreeMain():
     #datasetEntropy = decision_tree.entropy(my_data) # 2.40
     #print('Entropy in {0} dataset: {1}').format(filename, str(datasetEntropy))
 
-    rowToClassify = dataset[1]
+    testRow = dataset[1477]
     del dataset[1]
 
     #variousTrees = random_forest.createDecisionTrees(subsets, decision_tree.buildTreeWithMaxElementsInNode, minNodes = 100)
     #for i in variousTrees:
     #    decision_tree.printtree(i)
 
-    variousTreesPool = random_forest.createDecisionTreesPool(subsets, decision_tree.buildTreeWithMaxElementsInNode, processes = 5 ,minNodes = 100)
-    for i in variousTreesPool:
-        decision_tree.printtree(i)
+    #variousTreesPool = random_forest.createDecisionTreesPool(subsets, decision_tree.buildTreeWithMaxElementsInNode, processes = 5 ,minNodes = 100)
+    #for i in variousTreesPool:
+    #    decision_tree.printtree(i)
 
     variousTreesMultiprocessinng = random_forest.createDecisionTreesMultiprocessing(subsets, decision_tree.buildTreeWithMaxElementsInNode, minNodes = 100)
     for i in variousTreesMultiprocessinng:
         decision_tree.printtree(i)
+
+    classificationResult = random_forest.classifyForestMultiprocessing(variousTreesMultiprocessinng, testRow)
+    print classificationResult
+    print "La clasificacion final es: " + random_forest.getFinalResult(classificationResult)
     #tree = decision_tree.buildTreeWithHeigth(dataset, maxHeigth=5)
     #decision_tree.printtree(tree)
     print "Decidimos la siguiente fila:"
-    print rowToClassify
-   # print "Resultado -> " + str(decision_tree.classifyInTree(tree, rowToClassify))
+    print testRow
+   # print "Resultado -> " + str(decision_tree.classifyInTree(tree, testRow))
 
 
 
