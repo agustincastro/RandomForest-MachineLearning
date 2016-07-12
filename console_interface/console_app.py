@@ -23,20 +23,18 @@ def decisionTreeMain():
     subsets = datasetModule.randomSplit(dataset, 3)
     datasetModule.printDataSet(subsets)
 
-    #printDataSet(dataset)
+    testSet = datasetModule.getTestSet(dataset,11)
+    datasetModule.printDataSet(testSet)
+    # Delete balanced testSet from original dataset
+    dataset = [x for x in dataset if x not in testSet]
+    testRow = testSet[0]
 
-    #datasetEntropy = decision_tree.entropy(my_data) # 2.40
-    #print('Entropy in {0} dataset: {1}').format(filename, str(datasetEntropy))
-
-    testRow = dataset[1477]
-    del dataset[1]
-
-    #variousTrees = random_forest.createDecisionTrees(subsets, decision_tree.buildTreeWithMaxElementsInNode, minNodes = 100)
-    #for i in variousTrees:
+    # variousTrees = random_forest.createDecisionTrees(subsets, decision_tree.buildTreeWithMaxElementsInNode, minNodes = 100)
+    # for i in variousTrees:
     #    decision_tree.printtree(i)
-
-    #variousTreesPool = random_forest.createDecisionTreesPool(subsets, decision_tree.buildTreeWithMaxElementsInNode, processes = 5 ,minNodes = 100)
-    #for i in variousTreesPool:
+    #
+    # variousTreesPool = random_forest.createDecisionTreesPool(subsets, decision_tree.buildTreeWithMaxElementsInNode, processes = 5 ,minNodes = 100)
+    # for i in variousTreesPool:
     #    decision_tree.printtree(i)
 
     variousTreesMultiprocessinng = random_forest.createDecisionTreesMultiprocessing(subsets, decision_tree.buildTreeWithMaxElementsInNode, minNodes = 100)
@@ -50,8 +48,6 @@ def decisionTreeMain():
     #decision_tree.printtree(tree)
     print "Decidimos la siguiente fila:"
     print testRow
-   # print "Resultado -> " + str(decision_tree.classifyInTree(tree, testRow))
-
 
 
 

@@ -1,6 +1,6 @@
 import csv
 import random
-
+import collections
 
 #Example of data structure
 my_data=[['slashdot','USA','yes',18,'None'],
@@ -89,4 +89,24 @@ def randomSplit(dataSet, subsetQuantity):
         dataSets.append( dataSet[startingIndex : startingIndex+subsetLength] )
         startingIndex += subsetLength
     return dataSets
+
+def getTestSet(dataSet, column, divisionPercentage = 30):
+    dataSetLength = len(dataSet)
+    columnList = [row[column] for row in dataSet]
+    ocurrences = collections.Counter(columnList)
+    percentages = {}
+
+    # The percentages dictionary contains the quantites of each attribute class we need to take
+    # in order to get a well balanced test set
+    for var in ocurrences:
+        percentages[var] = (ocurrences[var] * divisionPercentage)/100
+    # We shuffle randomly the dataset in order to get always a different testset
+    random.shuffle(dataSet)
+    testSet = []
+    for row in dataSet:
+        value = row[column]
+        if( percentages[value] > 0):
+            testSet.append(row)
+            percentages[value] -= 1
+    return testSet
 
