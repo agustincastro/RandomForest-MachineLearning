@@ -3,7 +3,6 @@ import time
 from learning_logic import decision_tree
 
 
-
 ##  --------------------   FOREST CREATION --------------------------
 ##  =================================================================
 

@@ -23,10 +23,37 @@ def stdev(numbers):
 def mean(numbers):
 	return sum(numbers)/float(len(numbers))
 
-# Separates our training dataset into instances grouped by class. Then calculateS the summaries for each attribute.
+
+# Separates the training dataset instances by class value so that we can calculate statistics for each class
+def separateByClass(dataset):
+	separated = {}
+	for i in range(len(dataset)):
+		vector = dataset[i]
+		if (vector[-1] not in separated):
+			separated[vector[-1]] = []
+		separated[vector[-1]].append(vector)
+	return separated
+
+# Separates our training dataset into instances grouped by class. Then calculates the summaries for each attribute.
 def summarizeByClass(dataset):
 	separated = separateByClass(dataset)
 	summaries = {}
 	for classValue, instances in separated.iteritems():
 		summaries[classValue] = summarize(instances)
 	return summaries
+
+# Get average value of a column, columnIndex starts at 0
+def average(dataSet, columnIndex):
+	sum = 0
+	for row in dataSet:
+		sum += row[columnIndex]
+	return sum / len(dataSet)
+
+# Get max value of a column, columnIndex starts at 0
+def maxValue(dataset, columnIndex):
+	return max([row[columnIndex] for row in dataset])
+
+# Get min value of a column, columnIndex starts at 0
+def minValue(dataset, columnIndex):
+	return min([row[columnIndex] for row in dataset])
+

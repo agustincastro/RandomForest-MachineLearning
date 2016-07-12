@@ -41,16 +41,6 @@ def splitDataset(dataset, splitRatio):
 		trainSet.append(copy.pop(index))
 	return [trainSet, copy]
 
-# Separates the training dataset instances by class value so that we can calculate statistics for each class
-def separateByClass(dataset):
-	separated = {}
-	for i in range(len(dataset)):
-		vector = dataset[i]
-		if (vector[-1] not in separated):
-			separated[vector[-1]] = []
-		separated[vector[-1]].append(vector)
-	return separated
-
 
 # Removes every row that has blank data in order not to bias the algorithm
 def normalizeDataset(dataSet):
@@ -88,20 +78,6 @@ def printDataSet(dataSet):
     for line in dataSet:
         print line
 
-# Get average value of a column, columnIndex starts at 0
-def average(dataSet, columnIndex):
-    sum = 0
-    for row in dataSet:
-        sum += row[columnIndex]
-    return sum / len(dataSet)
-
-# Get max value of a column, columnIndex starts at 0
-def maxValue(dataset, columnIndex):
-    return max([row[columnIndex] for row in dataset])
-
-# Get min value of a column, columnIndex starts at 0
-def minValue(dataset, columnIndex):
-    return min([row[columnIndex] for row in dataset])
 
 # Splits a dataset randomly into a number of datasets
 def randomSplit(dataSet, subsetQuantity):
@@ -113,3 +89,4 @@ def randomSplit(dataSet, subsetQuantity):
         dataSets.append( dataSet[startingIndex : startingIndex+subsetLength] )
         startingIndex += subsetLength
     return dataSets
+

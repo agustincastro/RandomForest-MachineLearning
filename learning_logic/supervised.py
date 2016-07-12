@@ -41,20 +41,6 @@ def getAccuracy(testSet, predictions):
 
 #----------------------------------------
 
-#  -------  Basic Linear Regression -----
-
-def basicLinearRegression(x, y):
-	length = len(x)
-	sumX = sum(x)
-	sumY = sum(y)
-	sumXSquared = sum(map(lambda a: a * a, x))
-	sumOfProducts = sum([x[i] * y[i] for i in range(length)])
-
-	a = (sumOfProducts - (sumX * sumY) / length) / (sumXSquared - ((sumX ** 2) / length))
-	b = (sumY - a * sumX) / length
-	return a, b
-
-#----------------------------------------
 
 
 
