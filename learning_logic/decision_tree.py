@@ -177,7 +177,7 @@ def buildTreeWithMaxElementsInNode(rows, scorefun=entropy, minNodes=100):
 
 def classifyInTree(tree, row):
     if tree.results: # El diccionario de resultados esta vacio, me encuentro en una hoja, devuelvo la clase
-        print tree.results.keys()
+        #print tree.results.keys()
         if len(tree.results.keys()) > 1:
             return max(tree.results, key=tree.results.get)
         return tree.results.keys()[0]

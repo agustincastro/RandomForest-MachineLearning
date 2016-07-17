@@ -78,7 +78,7 @@ def classifyForestMultiprocessing(decisionTrees, test):
     for p in processes: p.start()
     # Exit the completed processes
     for p in processes: p.join()
-    print("--- %s seconds to classify trees concurrently(multiprocessing)---" % (time.time() - start_time))
+    #print("--- %s seconds to classify trees concurrently(multiprocessing)---" % (time.time() - start_time))
     # Get process results from the output queue
     return [output.get() for p in processes]
 
