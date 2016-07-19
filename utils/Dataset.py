@@ -91,7 +91,6 @@ def randomSplit(dataSet, subsetQuantity):
     return dataSets
 
 def getTestSet(dataSet, column, divisionPercentage = 30):
-    dataSetLength = len(dataSet)
     columnList = [row[column] for row in dataSet]
     ocurrences = collections.Counter(columnList)
     percentages = {}
@@ -101,6 +100,7 @@ def getTestSet(dataSet, column, divisionPercentage = 30):
     for var in ocurrences:
         percentages[var] = (ocurrences[var] * divisionPercentage)/100
     # We shuffle randomly the dataset in order to get always a different testset
+    print percentages
     random.shuffle(dataSet)
     testSet = []
     for row in dataSet:

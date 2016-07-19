@@ -15,10 +15,10 @@ def maxElementsInNodeTest(columnToTestIndex = 11, numberOfTrees = 3, minNodes = 
 
     #  ---- Prepare dataset for analysing  ------
     del dataset[0] # removes headers from dataset
-    dataset = datasetModule.normalizeDataset(dataset)
+    datasetModule.normalizeDataset(dataset)
 
     # ----- Separates testSet from Dataset ------
-    testSet = datasetModule.getTestSet(dataset,columnToTestIndex)
+    testSet = datasetModule.getTestSet(dataset,columnToTestIndex, 5)
     # Delete balanced testSet from original dataset
     dataset = [x for x in dataset if x not in testSet]
 
@@ -42,7 +42,7 @@ def maxElementsInNodeTest(columnToTestIndex = 11, numberOfTrees = 3, minNodes = 
 def maxHeigthTest(columnToTestIndex = 11, numberOfTrees = 3, maxHeigth = 15):
     # ----- Import csv file -----
     resource_package = 'resources'
-    filename = 'wine-quality-red.csv'
+    filename = 'wine-color.csv'
     resource_path = os.path.join('training_data', filename)
     filePath = pkg_resources.resource_filename(resource_package, resource_path) # Gets path of file from another package
     lines = csv.reader(open(filePath, "rb"))
@@ -53,7 +53,7 @@ def maxHeigthTest(columnToTestIndex = 11, numberOfTrees = 3, maxHeigth = 15):
     dataset = datasetModule.normalizeDataset(dataset)
 
     # ----- Separates testSet from Dataset ------
-    testSet = datasetModule.getTestSet(dataset,columnToTestIndex)
+    testSet = datasetModule.getTestSet(dataset, columnToTestIndex, 20)
     # Delete balanced testSet from original dataset
     dataset = [x for x in dataset if x not in testSet]
 
@@ -76,10 +76,13 @@ def maxHeigthTest(columnToTestIndex = 11, numberOfTrees = 3, maxHeigth = 15):
 
 # Test random forest with max elements in node
 # Params = columnToTestIndex = 11, numberOfTrees = 3, minNodes = 15
-maxElementsInNodeTest(11, 5, 4)
-maxElementsInNodeTest(11, 3, 4)
+maxElementsInNodeTest(11, 2, 200)
+maxElementsInNodeTest(11, 2, 50)
+#maxElementsInNodeTest(11, 1, 20)
+#maxElementsInNodeTest(11, 1, 5)
+
 
 # Test random forest with max Heigth
 # Params = columnToTestIndex = 11, numberOfTrees = 3, maxHeigth = 15
-maxHeigthTest(11, 5, 15)
-maxHeigthTest(11, 3, 15)
+#maxHeigthTest(10, 1, 15)
+#maxHeigthTest(11, 3, 15)
