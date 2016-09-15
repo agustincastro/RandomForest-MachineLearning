@@ -7,7 +7,7 @@ import csv
 def maxElementsInNodeTest(columnToTestIndex = 11, numberOfTrees = 3, minNodes = 15):
     # ----- Import csv file -----
     resource_package = 'resources'
-    filename = 'wine-quality-red.csv'
+    filename = 'wine-color.csv'
     resource_path = os.path.join('training_data', filename)
     filePath = pkg_resources.resource_filename(resource_package, resource_path) # Gets path of file from another package
     lines = csv.reader(open(filePath, "rb"))
@@ -18,7 +18,7 @@ def maxElementsInNodeTest(columnToTestIndex = 11, numberOfTrees = 3, minNodes = 
     datasetModule.normalizeDataset(dataset)
 
     # ----- Separates testSet from Dataset ------
-    testSet = datasetModule.getTestSet(dataset,columnToTestIndex, 5)
+    testSet = datasetModule.getTestSet(dataset,columnToTestIndex, 10)
     # Delete balanced testSet from original dataset
     dataset = [x for x in dataset if x not in testSet]
 
@@ -42,7 +42,7 @@ def maxElementsInNodeTest(columnToTestIndex = 11, numberOfTrees = 3, minNodes = 
 def maxHeigthTest(columnToTestIndex = 11, numberOfTrees = 3, maxHeigth = 15):
     # ----- Import csv file -----
     resource_package = 'resources'
-    filename = 'wine-color.csv'
+    filename = 'wine-quality-red.csv'
     resource_path = os.path.join('training_data', filename)
     filePath = pkg_resources.resource_filename(resource_package, resource_path) # Gets path of file from another package
     lines = csv.reader(open(filePath, "rb"))
@@ -53,7 +53,7 @@ def maxHeigthTest(columnToTestIndex = 11, numberOfTrees = 3, maxHeigth = 15):
     dataset = datasetModule.normalizeDataset(dataset)
 
     # ----- Separates testSet from Dataset ------
-    testSet = datasetModule.getTestSet(dataset, columnToTestIndex, 20)
+    testSet = datasetModule.getTestSet(dataset, columnToTestIndex, 30)
     # Delete balanced testSet from original dataset
     dataset = [x for x in dataset if x not in testSet]
 
@@ -62,7 +62,7 @@ def maxHeigthTest(columnToTestIndex = 11, numberOfTrees = 3, maxHeigth = 15):
 
     # Creates random Forest
     print "***** Creating random forest with {} max heigth({}) trees. *****".format(numberOfTrees, maxHeigth)
-    variousTreesMultiprocessinng = random_forest.createDecisionTreesMultiprocessing(subsets, decision_tree.buildTreeWithHeigth, maxHeigth = 15)
+    variousTreesMultiprocessinng = random_forest.createDecisionTrees(subsets, decision_tree.buildTreeWithHeigth, maxHeigth = 15)
 
     # Classify testSet against the forest
     rightAnswersCount = 0
@@ -76,13 +76,15 @@ def maxHeigthTest(columnToTestIndex = 11, numberOfTrees = 3, maxHeigth = 15):
 
 # Test random forest with max elements in node
 # Params = columnToTestIndex = 11, numberOfTrees = 3, minNodes = 15
-maxElementsInNodeTest(11, 2, 200)
-maxElementsInNodeTest(11, 2, 50)
-#maxElementsInNodeTest(11, 1, 20)
-#maxElementsInNodeTest(11, 1, 5)
+#maxElementsInNodeTest(12, 2, 200)
+#maxElementsInNodeTest(12, 2, 50)
+#maxElementsInNodeTest(12, 2, 20)
+#maxElementsInNodeTest(12, 2, 5)
 
 
 # Test random forest with max Heigth
 # Params = columnToTestIndex = 11, numberOfTrees = 3, maxHeigth = 15
-#maxHeigthTest(10, 1, 15)
-#maxHeigthTest(11, 3, 15)
+#maxHeigthTest(11, 1, 5)
+maxHeigthTest(11, 3, 10)
+#maxHeigthTest(11, 1, 15)
+#maxHeigthTest(11, 1, 20)
