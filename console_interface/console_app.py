@@ -42,12 +42,12 @@ def decisionTreeMain():
         decision_tree.printtree(i)
 
     classificationResult = random_forest.classifyForestMultiprocessing(variousTreesMultiprocessinng, testRow)
-    print classificationResult
-    print "La clasificacion final es: " + random_forest.getFinalResult(classificationResult)
+    print(classificationResult)
+    print("The final classification is: {}".format(random_forest.getFinalResult(classificationResult)))
     #tree = decision_tree.buildTreeWithHeigth(dataset, maxHeigth=5)
     #decision_tree.printtree(tree)
-    print "Decidimos la siguiente fila:"
-    print testRow
+    print("Decided the next row:")
+    print(testRow)
 
 
 

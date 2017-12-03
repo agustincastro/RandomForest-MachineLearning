@@ -13,7 +13,7 @@ def createDecisionTrees(dataSets, buildTreeFunction = decision_tree.buildTree, *
     start_time = time.time()
     for subset in dataSets:
         decisionTrees.append(buildTreeFunction(subset, **kwargs))
-    print("--- %s seconds to create trees sequential ---" % (time.time() - start_time))
+    print("--- {} seconds to create trees sequential ---".format(time.time() - start_time))
     return decisionTrees
 
 
@@ -32,7 +32,7 @@ def createDecisionTreesMultiprocessing(dataSets, buildTreeFunction = decision_tr
     for p in processes: p.start()
     # Exit the completed processes
     for p in processes: p.join()
-    print("--- %s seconds to create trees concurrently(multiprocessing)---" % (time.time() - start_time))
+    print("--- {} seconds to create trees concurrently(multiprocessing)---".format(time.time() - start_time))
     # Get process results from the output queue
     return [output.get() for p in processes]
 
@@ -49,7 +49,7 @@ def createDecisionTreesPool(dataSets, buildTreeFunction = decision_tree.buildTre
     # Runs processes, the buildtree function is executed asynchronically until all the results are retrieved with get()
     results = [pool.apply_async(buildTreeFunction, (dataSets[x], ), kwargs) for x in range(0, len(dataSets))]
     output = [r.get() for r in results]
-    print("--- %s seconds to create trees concurrently(pool)---" % (time.time() - start_time))
+    print("--- {} seconds to create trees concurrently(pool)---".format(time.time() - start_time))
     return output
 
 

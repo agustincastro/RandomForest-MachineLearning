@@ -26,7 +26,7 @@ def calculateClassProbabilities(summaries, inputVector):
 def predict(summaries, inputVector):
 	probabilities = calculateClassProbabilities(summaries, inputVector)
 	bestLabel, bestProb = None, -1
-	for classValue, probability in probabilities.iteritems():
+	for classValue, probability in probabilities.items():
 		if bestLabel is None or probability > bestProb:
 			bestProb = probability
 			bestLabel = classValue
