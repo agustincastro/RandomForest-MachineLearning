@@ -56,7 +56,7 @@ The techniques used by the multiprocessing module where output Queue and process
 <img src="architecture-diagram.png" alt="architecture-diagram" width="500px" height="500px"/>
 </p></br>
 
-##### Project modules:
+#### Project modules:
 * ***Decision_tree:*** Contains all logic for creating a decision tree with different stop conditions, classification algorithms and printing trees.
 
 * ***Random_forest:*** Creation and classification algorithms for a forest. Decision algorithms are implemented both sequentially and concurrently in order to improve the performance of heavy operations such as creating multiple decision trees.
