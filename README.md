@@ -1,6 +1,6 @@
 # Random Forests
 
-###Intro
+### Intro
 
 Python package for analysing data using machine learning techniques.
 The package provides implementation of different kinds of decision trees and random forests in order to solve classification problems and handle different datasets.
@@ -15,13 +15,13 @@ The library was developed relying only on modules included in a standard install
 
 To make the implementation generic to any dataset, a normalization function which deletes dataset incomplete entries of the same was implemented. Similarly in the "dataset.py " module various functions of analysis and manipulation of the dataset are implemented.
 
-###Creating a decision tree
+### Creating a decision tree
 
 The default method for creating a decision tree has no stop condition, which results in a perfectly fitting tree for the training set. Since probably the training set has a large number of records, this algorithm may cause overfitting. 
 
 For this reason we take as stop condition the maximum number of records to have in each leaf. Another way to stop the construction of the tree was restricting the height of the tree under construction.
 
-######Stop conditions
+###### Stop conditions
 
 We rely on two stopping rules for building decision trees:
 
@@ -33,14 +33,14 @@ We rely on two stopping rules for building decision trees:
 For each stoping condition, a different algorithm for creating the tree is implemented, this can be found in the "decision_tree.py" module.
 
 
-###Concurrent construction techniques for the forest
+### Concurrent construction techniques for the forest
 
 To create the random forest, a separate module ("random_forest.py") provides different implementations of the forest. This module has the responsibility to create the forest and evaluation of it.
 
 To build the forest and to evaluate the test, concurrent and sequential implementations are provided in the module in order to increase performance.
 
 
-###parallelization
+### Parallelization
 
 Depending on the application, two common approaches in parallel programming are running code in multiple threads or processes. The difference is that the threads usually have access to the same memory areas, so this approach can easily lead to synchronization errors.
 
@@ -50,13 +50,13 @@ To achieve this we use the multiprocessing module python way to make better use 
 
 The techniques used by the multiprocessing module where output Queue and process pool, the performance of both were virtually identical.
 
-###Architecture
+### Architecture
 
 <p align="center">
 <img src="architecture-diagram.png" alt="architecture-diagram" width="500px" height="500px"/>
 </p></br>
 
-#####Project modules:
+##### Project modules:
 * ***Decision_tree:*** Contains all logic for creating a decision tree with different stop conditions, classification algorithms and printing trees.
 
 * ***Random_forest:*** Creation and classification algorithms for a forest. Decision algorithms are implemented both sequentially and concurrently in order to improve the performance of heavy operations such as creating multiple decision trees.
