@@ -17,7 +17,7 @@ To make the implementation generic to any dataset, a normalization function whic
 
 ### Creating a decision tree
 
-The default method for creating a decision tree has no stop condition, which results in a perfectly fitting tree for the training set. Since probably the training set has a large number of records, this algorithm may cause overfitting. 
+The default method for creating a decision tree has no stop condition, which results in a perfectly fitting tree for the training set. Since probably the training set has a large number of records, this algorithm may cause overfitting.
 
 For this reason we take as stop condition the maximum number of records to have in each leaf. Another way to stop the construction of the tree was restricting the height of the tree under construction.
 
@@ -68,19 +68,3 @@ The techniques used by the multiprocessing module where output Queue and process
 * ***Tests:*** Implementation of tests to measure performance of different algorithms and evaluate a dataset.
 
 * ***Console_app:*** Console Application shows a test run of the program.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
